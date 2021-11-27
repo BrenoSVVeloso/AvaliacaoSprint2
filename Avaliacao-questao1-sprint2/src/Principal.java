@@ -9,7 +9,7 @@ public class Principal {
             int escolha = 0;
             System.out.println("Escolha a opção que deseja: \n0 - Sair do programa \n1 - Cadastrar 3 produtos na base. \n2 - Atualizar o primeiro produto. \n3 - Excluir o segundo produto cadastrado");
             escolha = scanner.nextInt();
-            //Continua o codigo enquanto a flag não é digitada
+            //Continua o codigo enquanto a flag '0' não é digitada
             while(escolha!= 0){
                
                 switch(escolha){
