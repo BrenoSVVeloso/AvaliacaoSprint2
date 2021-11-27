@@ -4,7 +4,8 @@ public class Filme {
     private String descricao;
     private int ano;
     private int paginacao;
-
+    
+    //Cria o Filme
     public Filme(String nome, String descricao, int ano){
         this.nome = nome;
         this.descricao = descricao;

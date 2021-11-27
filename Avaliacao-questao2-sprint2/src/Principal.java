@@ -7,7 +7,6 @@ import java.util.Scanner;
 
 public class Principal {
     public static void main(String[] args) throws SQLException{
-        Scanner verificador;
         Scanner scanner = new Scanner(System.in);
         List<Filme> filmes = new ArrayList<Filme>();
         
@@ -17,22 +16,26 @@ public class Principal {
             FilmeDAO filmeDAO = new FilmeDAO(connection);
             cadastraFilmes(filmeDAO);
             int qtdPaginas;
-        do{
-            System.out.println("Olá usuário, quantas páginas voce quer acessar?");
+            //Trata a entrada caso o numero de páginas for negativo ou 0
+            do{
+                System.out.println("Olá usuário, quantas páginas voce quer acessar?");
+                    
+                qtdPaginas = scanner.nextInt();
                 
-             qtdPaginas = scanner.nextInt();
-            
-             if(qtdPaginas <=0){
-                System.out.println("Desculpe você digitou um número inválido.");
-            }
-        }while(qtdPaginas <= 0);
-        filmes = filmeDAO.buscar();
-        filtrar(qtdPaginas, filmes);
+                if(qtdPaginas <=0){
+                    System.out.println("Desculpe você digitou um número inválido.");
+                }
+            }while(qtdPaginas <= 0);
+
+            filmes = filmeDAO.buscar();
+            filtrar(qtdPaginas, filmes);
             
         
         }
         scanner.close();
     }
+
+    //cadastra os 20 filmes
     public static void cadastraFilmes(FilmeDAO filmeDAO) throws SQLException{
 
         Filme montyPython = new Filme("Monty Python em busca do Cálice Sagrado", "Comédia.", 1975);
@@ -79,24 +82,31 @@ public class Principal {
     }
 
 
-
+    //filtra os filmes com base na quatidade de páginas e printa os filmes
     public static void filtrar(int qtdPaginas, List<Filme> filmes){
         Scanner scanner = new Scanner(System.in);
         Scanner verificador;
         String escolha ="";
         int i = 0;
+        //calcula a quantidade de filmes por páginas
         int filmesPorPagina = 20/qtdPaginas;
         boolean continua;
         int qtdParaPrintar = filmesPorPagina;
         System.out.println("Aqui está seus filmes: ");
+        //roda o programa até a flag "sair"
         do{
             System.out.println("------------------------------------------");
             continua = true;
+            //caso o usuário escolha next, vai para a próxima página
             if(escolha.equals("next")){
+                //tratamento caso a quantidade de filmes ou a quantidade de páginas for maior que o permitido
                if((i+filmesPorPagina) <=20 && (qtdParaPrintar+filmesPorPagina) <=21){
+                //muda o indice mínimo usado para printar
                 i += filmesPorPagina;
+                //muda o indice mínimo usado para printar
                 qtdParaPrintar += filmesPorPagina;
                }else{
+                   //tratamento caso já esteja na última página
                    if(filmes.size() - qtdParaPrintar <= 0 ){
                     System.out.println("Desculpe você já está na ultima página");
                     continua = false;
@@ -105,7 +115,9 @@ public class Principal {
                     qtdParaPrintar += filmesPorPagina;
                    }
                }
+               //caso o usuário escolha back, vai para a página anterior
             }else if(escolha.equals("back")){
+                //tratamento caso já esteja a primeira página
                 if((i-filmesPorPagina) >=0){
                     i -= filmesPorPagina;
                     qtdParaPrintar -= filmesPorPagina;
@@ -114,10 +126,13 @@ public class Principal {
                     continua = false;
                 }
             }
+
+            //loop para printar a lista com os filmes;
             for(int k = i ; k< qtdParaPrintar && continua && k <filmes.size(); k++){  
                     System.out.println("Nome: "+ filmes.get(k).getNome() + ". \nDescricao: "+ filmes.get(k).getDescricao() +". \nAno: "+filmes.get(k).getAno()+"."); 
                     System.out.println("------------------------------------------");
                 }
+            //tratamento caso a entrada for inválida
             do{
                 System.out.println("Se deseja continuar para a proxima página digite (next). \nSe deseja ir para a página anterior digite (back). \nSe deseja sair digite (sair)");
                 escolha = scanner.nextLine();

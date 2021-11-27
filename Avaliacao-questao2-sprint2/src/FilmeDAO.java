@@ -9,22 +9,13 @@ import java.util.List;
 
 public class FilmeDAO {
     Connection connection;
-
+    //recebe a conexão com o banco de dados e adiciona ao seu atributo connection
     public FilmeDAO(Connection connection){
         this.connection = connection;
     }
 
+    //cadastra um filme na Tabela Filme
     public void cadastrar(Filme filme) throws SQLException{
-        // int ordenacao = 0;
-        // String sql = "SELECT MAX(ORDENACAO) AS MAXORDENACAO FROM FILME";
-        // try(PreparedStatement preparedStatement = connection.prepareStatement(sql)){
-        //     preparedStatement.execute();
-        //     ResultSet resultSet = preparedStatement.getResultSet();
-        //     while(resultSet.next()){
-        //         ordenacao = resultSet.getInt(1);
-        //     }
-        // }
-
 
         String sql = "INSERT INTO FILME (nome, descricao, ano) VALUES (?, ?, ?)";
 
@@ -33,12 +24,11 @@ public class FilmeDAO {
             preparedStatement.setString(1, filme.getNome());
             preparedStatement.setString(2, filme.getDescricao());
             preparedStatement.setInt(3, filme.getAno());
-            //preparedStatement.setInt(4, (ordenacao+1));
             
             preparedStatement.execute();
 
             try(ResultSet resultset = preparedStatement.getGeneratedKeys()){
-            
+                //insere o seu ID
                 while(resultset.next()){
                     filme.setId(resultset.getInt(1));
                 }
@@ -46,6 +36,7 @@ public class FilmeDAO {
         }
     }
 
+    //busca os filmes na tabela e retorna uma lista com o nome, descricao e o ano
     public List<Filme> buscar() throws SQLException{
         List<Filme> filmes = new ArrayList<Filme>();
         
