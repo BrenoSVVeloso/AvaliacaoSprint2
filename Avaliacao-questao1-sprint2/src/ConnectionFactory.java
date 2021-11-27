@@ -8,6 +8,7 @@ public class ConnectionFactory {
     private DataSource dataSource;
     //Cria a conexão com o mysql
     //Cria o Pool e o Data Source para administrar q quantidade de requisições recebidas, para não sobrecarregar o servidor
+    //DATABASE = loja
     public ConnectionFactory(){
         ComboPooledDataSource comboPooledDataSource = new ComboPooledDataSource();
         comboPooledDataSource.setJdbcUrl("jdbc:mysql://localhost/loja?useTimezone=true&serverTimezone=UTC");
