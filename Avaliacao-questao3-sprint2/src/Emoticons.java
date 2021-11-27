@@ -47,6 +47,7 @@ public class Emoticons {
                 }
             }
         }
+        //verifica qual é o sentimento expressado
         if(divertido > chateado){
             sentimentoExpressado = "divertido";
         }else if(divertido < chateado){
