@@ -4,14 +4,16 @@ public class Principal {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         ConnectionFactory connectionFactory = new ConnectionFactory();
-        try(Connection connection = connectionFactory.recuperaConnection();) {
+        try(Connection connection = connectionFactory.recuperaConnection()) {
             ProdutoDAO produtoDAO = new ProdutoDAO(connection);
             int escolha = 0;
             System.out.println("Escolha a opção que deseja: \n0 - Sair do programa \n1 - Cadastrar 3 produtos na base. \n2 - Atualizar o primeiro produto. \n3 - Excluir o segundo produto cadastrado");
             escolha = scanner.nextInt();
+            //Continua o codigo enquanto a flag não é digitada
             while(escolha!= 0){
                
                 switch(escolha){
+                    //cadastra 3 produtos
                     case 1:
                         Produto caderno = new Produto("Caderno", "96 folhas", 12.49, 10);
                         produtoDAO.salvar(caderno);
@@ -24,6 +26,7 @@ public class Principal {
 
                         System.out.println("Produtos cadastrados com sucesso!");
                         break;
+                        //atualiza o primeiro produto
                     case 2: 
                         System.out.println("Digite o novo nome do produto: ");
                         String nome = scanner.nextLine();
@@ -36,6 +39,7 @@ public class Principal {
                         int quantidade = scanner.nextInt();
                         produtoDAO.atualizarPrimeiroProduto(nome, descricao, preco, quantidade);
                         break;
+                        //remove o segundo produto
                     case 3 :
                         produtoDAO.excluirSegundoProduto();
                 }
